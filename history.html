@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Barcode History</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center">Barcode Geschiedenis</h1>
+  {% if history %}
+  <table class="table table-striped mt-3">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Barcode</th>
+      <th>Naam</th>
+      <th>THT</th>
+      <th>Tegevoegd op</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for line in history %}
+    {% set parts = line.strip().split('|') %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ parts[0] }}</td>
+      <td>{{ parts[1] }}</td>
+      <td>{{ parts[2] if parts | length > 2 else "N/A" }}</td>
+      <td>{{ parts[-1].split('-')[-1].strip() }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>Nog geen geschiedenis.</p>
+  {% endif %}
+  <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">Go Back</a>
+</div>
+</body>
+</html>
